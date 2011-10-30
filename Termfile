@@ -1,0 +1,32 @@
+# "My App"
+
+PROJECT_NAME = "myapp"
+PORT = 8000
+
+setup do
+  run "bundle install"
+end
+
+before do
+  run "cd ~/Apps/#{PROJECT_NAME}"
+end
+
+tab "#{PROJECT_NAME}" do
+  pane do
+    run "serve #{PORT}"
+    
+    pane do
+      run "compass watch"
+    end
+    
+    pane do
+      run "coffee -r coffeescript-growl -wc javascripts/*.coffee"
+    end
+    
+    pane do
+      run "mate ."
+      run "open http://localhost:#{PORT}/"
+      run "clear && ls -alG"
+    end
+  end
+end
