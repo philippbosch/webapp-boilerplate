@@ -1,0 +1,72 @@
+// Global style definitions
+
+h1 {
+    @extend .huge;
+}
+
+h2 {
+    @extend .large;
+}
+
+h3 {
+    @extend .bigger;
+}
+
+h4 {
+    @extend .big;
+}
+
+small {
+    @extend .small;
+}
+
+body {
+    background: rgb(232, 232, 232);
+    color: rgb(60, 60, 60);
+    // Stops Mobile Safari from auto-adjusting font-sizes
+    -webkit-text-size-adjust: 100%;
+    height: 100%;
+    overflow: hidden;
+    font-family: "Helvetica Neue", serif;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    
+    @if $debug {
+        &:before, &:after, #reloader {
+            position: fixed;
+            bottom: 0;
+            background: rgba(#000,0.1);
+            color: #FFF;
+            padding: 0px 10px;
+            height: 24px;
+            line-height: 24px;
+            text-decoration: none;
+        }
+        
+        &:before, &:after {
+            right: 0;
+            @include border-top-left-radius(4px);
+        }
+        
+        #reloader {
+            left: 0;
+            @include border-top-right-radius(4px);
+        }
+        
+        &:after {
+            bottom: 24px;
+            background: rgba(#000,0.05);
+        }
+        
+        #reloader {
+            display: block;
+        }
+    } @else {
+        #reloader {
+            display: none;
+        }
+    }
+}
+
+// Selection colors (easy to forget)
+@include selection-color(unquote("rgb(204,204,204)"));
