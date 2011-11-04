@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" _manifest="cache.manifest">
+<html lang="en"{% if not debug %} manifest="manifest.appcache"{% endif %}>
     <head>
         <meta charset="utf-8">
         <title>My App</title>
