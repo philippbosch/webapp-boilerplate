@@ -12,8 +12,9 @@ def get_static_files
   FileList['**/*.css', '**/*.html', '**/*.js', '**/*.json', '**/*.png', '**/*.jpg', '**/*.gif'].exclude(BUILD_DIR)
 end
 
-desc "Builds the cache.manifest appcache file"
+desc "Builds the manifest.appcache file"
 task :build_manifest do
+  puts "Building the appcache file …"
   cache_urls = ['/'] + get_static_files()
   network_urls = [
     'http://analytics.pb.io/'
@@ -29,6 +30,7 @@ task :build_manifest do
 end
 
 task :build_static do
+  puts "Building static files …"
   static_files = get_static_files()
   for file in static_files
     File.makedirs(File.join(BUILD_DIR, File.dirname(file)))
@@ -46,10 +48,15 @@ task :build_static do
 end
 
 task :deploy do
-  # sh 'git checkout gh-pages'
-  # sh 'git merge master'
-  # sh 'git checkout master'
-  # sh 'git push --all'
+  puts "Pushing to Github …"
+  sh "git push origin master"
+  
+  puts "Deploying to Github Pages …"
+  sh "cd #{BUILD_DIR}"
+  sh "git add ."
+  sh "HEAD=`cat ../.git/refs/heads/master` git commit -m \"Update app based on $HEAD\""
+  sh "git push origin gh-pages"
+  sh "cd .."
 end
 
 task :default => [:build_static, :build_manifest, :deploy]
