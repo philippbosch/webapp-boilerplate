@@ -1,13 +1,22 @@
+require 'erb'
 require 'time'
 
+OUTPUT_FILE = 'cache.manifest'
+TEMPLATE_FILE = 'cache.manifest.template'
+
+desc "Builds the cache.manifest appcache file"
 task :build_manifest do
-  files = FileList['**/*.css', '**/*.html', '**/*.js', '**/*.json', '**/*.png', '**/*.jpg', '**/*.gif']
-  manifest = "CACHE MANIFEST\n"
-  files.each do |file|
-    manifest = manifest + "#{file}\n"
+  cache_urls = ['/'] + FileList['**/*.css', '**/*.html', '**/*.js', '**/*.json', '**/*.png', '**/*.jpg', '**/*.gif']
+  network_urls = [
+    'http://analytics.pb.io/'
+  ]
+  
+  template = ERB.new File.read(TEMPLATE_FILE)
+  
+  File.open(OUTPUT_FILE, "w") do |f|
+    f.write(template.result(binding))
   end
-  manifest = manifest + "# #{Time.now.utc.iso8601}\n"
-  File.open('cache.manifest', 'w') {|f| f.write manifest }
+  
   sh 'git commit -m "Update manifest." cache.manifest'
 end
 
