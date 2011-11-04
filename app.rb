@@ -13,6 +13,7 @@ end
 get '/' do
   liquid :index, :locals => {
     :debug => settings.environment == :development,
-    :app_name => app_config['app_name']
+    :app_name => app_config['app_name'],
+    :app_title => app_config['app_title']
   }
 end

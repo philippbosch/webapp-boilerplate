@@ -25,8 +25,6 @@ task :build_manifest do
   File.open(File.join(BUILD_DIR, 'manifest.appcache'), "w") do |f|
     f.write(template.result(binding))
   end
-  
-  # sh 'git commit -m "Update manifest." cache.manifest'
 end
 
 task :build_static do
@@ -52,11 +50,7 @@ task :deploy do
   sh "git push origin master"
   
   puts "Deploying to Github Pages …"
-  sh "cd #{BUILD_DIR}"
-  sh "git add ."
-  sh "HEAD=`cat ../.git/refs/heads/master` git commit -m \"Update app based on $HEAD\""
-  sh "git push origin gh-pages"
-  sh "cd .."
+  sh "cd #{BUILD_DIR} && git add . && git commit -m \"Update app based on `cat ../.git/refs/heads/master`\" && git push origin gh-pages"
 end
 
 task :default => [:build_static, :build_manifest, :deploy]
