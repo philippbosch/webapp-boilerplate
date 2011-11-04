@@ -22,9 +22,13 @@
             <h1>Hello, app.</h1>
         </div>
         
-        <a href="#" onclick="location.reload(); return false;" id="reloader">reload</a>
+        {% if debug %}<a href="#" onclick="location.reload(); return false;" id="reloader">reload</a>{% endif %}
         <script src="javascripts/lib/zepto.min.js"></script>
         <script src="javascripts/lib/add2home.min.js"></script>
         <script src="javascripts/app.js"></script>
+        {% if debug %}
+        <script src="http://debug.phonegap.com/target/target-script-min.js#myapp"></script>
+        <!-- Remote Web Inspector is at http://debug.phonegap.com/client/#myapp -->
+        {% endif %}
     </body>
 </html>
