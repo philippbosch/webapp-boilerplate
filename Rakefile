@@ -9,7 +9,7 @@ BUILD_DIR = File.join(File.dirname(__FILE__), "build")
 app_config = open(File.join(File.dirname(__FILE__), 'config.yml')) {|f| YAML.load(f)}
 
 def get_static_files
-  FileList['**/*.css', '**/*.html', '**/*.js', '**/*.json', '**/*.png', '**/*.jpg', '**/*.gif'].exclude(BUILD_DIR)
+  FileList['**/*.css', '**/*.html', '**/*.js', '**/*.json', '**/*.png', '**/*.jpg', '**/*.gif'].exclude(/^build/)
 end
 
 desc "Builds the manifest.appcache file"
