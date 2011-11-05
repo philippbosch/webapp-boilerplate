@@ -1,3 +1,4 @@
+require 'liquid'
 require 'sinatra'
 require 'yaml'
 
