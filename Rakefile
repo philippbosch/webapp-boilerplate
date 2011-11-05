@@ -37,10 +37,12 @@ task :build_static do
   File.open('index.liquid') do |index_template|
     @index = Liquid::Template.parse(index_template.read())
     File.open(File.join(BUILD_DIR, 'index.html'), 'w') do |index_target|
-      index_target.write(@index.render(:locals => {
-        :debug => false,
-        :app_name => app_config['app_name']
-      }))
+      index_html = @index.render(
+        'debug' => false, 
+        'app_name' => app_config['app_name'], 
+        'app_title' => app_config['app_title']
+      )
+      index_target.write(index_html)
     end
   end
 end
