@@ -8,7 +8,6 @@ configure do
   set :environment, :development
   set :public, Proc.new { root }
   set :views, Proc.new { root }
-  set :port, app_config['port']
 end
 
 get '/' do
