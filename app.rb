@@ -6,7 +6,7 @@ app_config = open(File.join(File.dirname(__FILE__), 'config.yml')) {|f| YAML.loa
 
 configure do
   set :environment, :development
-  set :public, Proc.new { root }
+  set :public_folder, Proc.new { root }
   set :views, Proc.new { root }
 end
 

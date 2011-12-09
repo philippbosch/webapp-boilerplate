@@ -1,31 +1,26 @@
-# "My App"
+# __APPTITLE__
 
-PROJECT_NAME = "myapp"
-PORT = 8000
+APP_NAME = "__APPNAME__"
 
 setup do
   run "bundle install"
 end
 
 before do
-  run "cd ~/Apps/#{PROJECT_NAME}"
+  run "cd ~/Apps/#{APP_NAME}"
 end
 
-tab "#{PROJECT_NAME}" do
+tab "#{APP_NAME}" do
   pane do
-    run "serve #{PORT}"
+    run "tail -f ~/Library/Logs/Pow/apps/#{APP_NAME}.log"
     
     pane do
-      run "compass watch"
-    end
-    
-    pane do
-      run "coffee -r coffeescript-growl -wc javascripts/*.coffee"
+      run "foreman start"
     end
     
     pane do
       run "mate ."
-      run "open http://localhost:#{PORT}/"
+      run "open http://#{APP_NAME}.dev/"
       run "clear && ls -alG"
     end
   end
